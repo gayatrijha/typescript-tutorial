@@ -1,26 +1,56 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import InputField from './components/InputField';
+import TodoList from './components/TodoList';
+import { Todo } from './model';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// let  name :string;
+// name='jha';
+// let age: number | string
+// let hobbies : string [];
+// let role :[number, string];
+// role=[5,'jh'];
+// age='threr';
+
+// let printName: (fname:string)=> void
+// function printName(fname :any){
+//   console.log(fname);
+// }
+// printName('gj');
+// interface Person {
+//   name:  string;
+//   age? : number
+// }
+// type X={
+//   a:string;
+//   b:number;
+// }
+
+const App : React.FC =()=>{
+  const [todo, settodo] = useState<string>("");
+  const [todos, settodos] = useState<Todo[]>([]);
+
+  const handleAdd=(e :React.FormEvent)=>{
+    e.preventDefault();
+
+    if(todo){
+      settodos([...todos,{
+        id:Date.now(),
+        todo,
+        isDone:false
+
+      }]);
+      settodo('');
+    }
+  }
+  console.log(todos)
+    return (
+      <div className="App">
+        <span className="heading">Taskify</span>
+        <InputField todo={todo} settodo={settodo} handleAdd={handleAdd} />
+        <TodoList todos={todos} settodos={settodos}/>
+      </div>
+    )
 }
 
 export default App;
